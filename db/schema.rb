@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 2019_03_27_200159) do
     t.integer "group_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_memberships_on_group_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.integer "user_id"
@@ -65,5 +74,7 @@ ActiveRecord::Schema.define(version: 2019_03_27_200159) do
   end
 
   add_foreign_key "groups", "users"
+  add_foreign_key "memberships", "groups"
+  add_foreign_key "memberships", "users"
   add_foreign_key "users", "groups"
 end
